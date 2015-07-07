@@ -29,12 +29,10 @@ public class BaseEntity {
 	Long version
 
 	@Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
-	//	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ssX", timezone = "UTC")
 	@Column(name = "create_date", updatable = false, nullable = false)
 	LocalDateTime createDate;
 
 	@Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
-	//	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ssX", timezone = "UTC")
 	@Column(name = "update_date", updatable = false, nullable = false)
 	LocalDateTime updateDate;
 

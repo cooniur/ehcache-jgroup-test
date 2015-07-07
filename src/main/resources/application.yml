@@ -14,7 +14,23 @@ spring:
     jmx_enabled: true
   jpa:
     properties:
-      "net.sf.ehcache.configurationResourceName": "META-INF/ehcache/ehcache-devel.xml"
+      "hibernate.show_sql": false
+      "hibernate.format_sql": true
+      "hibernate.use_sql_comments": true
+      "hibernate.generate_statistics": true
+      "hibernate.cache.use_query_cache": true
+      "hibernate.cache.use_second_level_cache": true
+      "net.sf.ehcache.configurationResourceName": "META-INF/ehcache/ehcache.xml"
 
 flyway:
   enabled: true
+
+logging:
+  level:
+    # Hibernate statistics
+    "org.hibernate.engine.internal.StatisticalLoggingSessionEventListener": WARN
+    # Cache
+    "org.hibernate.cache": INFO
+    "net.sf.ehcache": DEBUG
+    # Cache replicator
+    "net.sf.ehcache.distribution": DEBUG

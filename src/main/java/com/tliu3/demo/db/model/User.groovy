@@ -1,5 +1,6 @@
 package com.tliu3.demo.db.model
 
+import javax.persistence.Cacheable
 import javax.persistence.CascadeType
 import javax.persistence.Entity
 import javax.persistence.FetchType
@@ -20,7 +21,8 @@ import groovy.transform.ToString
 @Entity
 @Table(name = "user")
 @ToString(includePackage = false, includeNames = true, includeSuper = true)
-@Cache(region = "common", usage = CacheConcurrencyStrategy.TRANSACTIONAL)
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class User extends BaseEntity {
 	String name
 

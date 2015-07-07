@@ -49,6 +49,34 @@
       						replicateRemovals=true" />
 	</defaultCache>
 
+	<cache name="com.tliu3.demo.db.model.Book"
+		   maxElementsInMemory="2000"
+		   eternal="false"
+		   timeToIdleSeconds="3600"
+		   timeToLiveSeconds="21600"
+		   statistics="true"
+		   memoryStoreEvictionPolicy="LFU"
+		   overflowToDisk="false">
+		<cacheEventListenerFactory
+				class="net.sf.ehcache.distribution.jgroups.JGroupsCacheReplicatorFactory"
+				properties="replicatePuts=true, replicateUpdates=true, replicateUpdatesViaCopy=true, replicateRemovals=true,
+	 						replicateAsynchronously=true, asynchronousReplicationIntervalMillis=500" />
+	</cache>
+
+	<cache name="com.tliu3.demo.db.model.User"
+		   maxElementsInMemory="2000"
+		   eternal="false"
+		   timeToIdleSeconds="3600"
+		   timeToLiveSeconds="21600"
+		   statistics="true"
+		   memoryStoreEvictionPolicy="LFU"
+		   overflowToDisk="false">
+		<cacheEventListenerFactory
+				class="net.sf.ehcache.distribution.jgroups.JGroupsCacheReplicatorFactory"
+				properties="replicatePuts=true, replicateUpdates=true, replicateUpdatesViaCopy=true, replicateRemovals=true,
+	 						replicateAsynchronously=true, asynchronousReplicationIntervalMillis=500" />
+	</cache>
+
 	<!-- <cache name="com.xyz.db.model.EntityName" -->
 	<!-- maxElementsInMemory="2000" -->
 	<!-- eternal="false" -->
