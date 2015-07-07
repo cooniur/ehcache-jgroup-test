@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd" updateCheck="false">
+
+	<diskStore path="java.io.tmpdir/ehcache-test" />
+
+	<cacheManagerPeerProviderFactory
+			class="net.sf.ehcache.distribution.jgroups.JGroupsCacheManagerPeerProviderFactory"
+			properties="connect=UDP(mcast_addr=231.12.21.132;mcast_port=45566;):PING:
+						MERGE2:FD_SOCK:VERIFY_SUSPECT:pbcast.NAKACK:UNICAST:pbcast.STABLE:FRAG:pbcast.GMS"
+			propertySeparator="::" />
+
+	<!-- It is important that the cache timeout of the underlying cache implementation be set to
+		a higher value than the timeouts of any of the query caches. -->
+	<cache name="org.hibernate.cache.internal.StandardQueryCache"
+		   maxElementsInMemory="20000"
+		   timeToIdleSeconds="1200"
+		   timeToLiveSeconds="3600"
+		   statistics="true"
+		   eternal="false"
+		   memoryStoreEvictionPolicy="LFU"
+		   overflowToDisk="false" />
+
+	<!-- This is here so that authoring updates are propagated throughout the cluster.
+		This should be the only cache that needs to replicate puts, and also to
+		replicate updates via copy. -->
+	<cache name="org.hibernate.cache.spi.UpdateTimestampsCache"
+		   maxElementsInMemory="100"
+		   eternal="true"
+		   overflowToDisk="false">
+		<cacheEventListenerFactory
+				class="net.sf.ehcache.distribution.jgroups.JGroupsCacheReplicatorFactory"
+				properties="replicateAsynchronously=true, replicatePuts=true,
+    					  	replicateUpdates=true, replicateUpdatesViaCopy=false,
+      						replicateRemovals=true" />
+	</cache>
+
+	<defaultCache
+			maxElementsInMemory="10000"
+			timeToIdleSeconds="1200"
+			timeToLiveSeconds="3600"
+			statistics="true"
+			eternal="false"
+			memoryStoreEvictionPolicy="LFU"
+			overflowToDisk="false">
+		<cacheEventListenerFactory
+				class="net.sf.ehcache.distribution.jgroups.JGroupsCacheReplicatorFactory"
+				properties="replicateAsynchronously=true, replicatePuts=true,
+    					  	replicateUpdates=true, replicateUpdatesViaCopy=false,
+      						replicateRemovals=true" />
+	</defaultCache>
+
+	<!-- <cache name="com.xyz.db.model.EntityName" -->
+	<!-- maxElementsInMemory="2000" -->
+	<!-- eternal="false" -->
+	<!-- timeToIdleSeconds="3600" -->
+	<!-- timeToLiveSeconds="21600" -->
+	<!-- statistics="true" -->
+	<!-- memoryStoreEvictionPolicy="LFU" -->
+	<!-- overflowToDisk="false"> -->
+	<!-- <cacheEventListenerFactory -->
+	<!-- class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" -->
+	<!-- properties="replicateAsynchronously=true, replicatePuts=false, -->
+	<!-- replicateUpdates=true, replicateUpdatesViaCopy=false, -->
+	<!-- replicateRemovals=true, -->
+	<!-- asynchronousReplicationIntervalMillis=5000" -->
+	<!-- /> -->
+	<!-- </cache> -->
+</ehcache>

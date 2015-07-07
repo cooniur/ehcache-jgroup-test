@@ -1,0 +1,20 @@
+server:
+  port: 12345
+
+management:
+  port: 12346
+
+spring:
+  pidfile: "/tmp/ehcache-test.pid"
+  datasource:
+    name: "test"
+    url: "jdbc:mysql://localhost:3336/mydb"
+    username: "mydb"
+    password: "mydb"
+    jmx_enabled: true
+  jpa:
+    properties:
+      "net.sf.ehcache.configurationResourceName": "META-INF/ehcache/ehcache-devel.xml"
+
+flyway:
+  enabled: true

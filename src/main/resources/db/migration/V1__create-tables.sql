@@ -1,0 +1,34 @@
+CREATE TABLE `book` (
+    `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(45) NOT NULL,
+    `version` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+    `create_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `update_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `name_UNIQUE` (`name`)
+)  ENGINE=INNODB AUTO_INCREMENT=4 DEFAULT CHARSET=UTF8MB4;
+
+CREATE TABLE `user` (
+    `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(45) NOT NULL,
+    `sex` VARCHAR(45) DEFAULT NULL,
+    `age` INT(11) DEFAULT NULL,
+    `version` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+    `create_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `update_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `name_UNIQUE` (`name`)
+)  ENGINE=INNODB AUTO_INCREMENT=4 DEFAULT CHARSET=UTF8MB4;
+
+CREATE TABLE `user_book_subscription` (
+    `user_id` INT(10) UNSIGNED NOT NULL,
+    `book_id` INT(10) UNSIGNED NOT NULL,
+    KEY `fk_idx` (`user_id`),
+    KEY `fk_user_book_subscription_book_id_idx` (`book_id`),
+    CONSTRAINT `fk_user_book_subscription_book_id` FOREIGN KEY (`book_id`)
+        REFERENCES `book` (`id`)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_user_book_subscription_user_id` FOREIGN KEY (`user_id`)
+        REFERENCES `user` (`id`)
+        ON DELETE CASCADE ON UPDATE CASCADE
+)  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4;
