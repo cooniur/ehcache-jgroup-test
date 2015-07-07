@@ -13,7 +13,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	Optional<User> findByName(String name);
 
-	default boolean existsByName(String name) {
+	default boolean exists(String name) {
 		return this.findByName(name).isPresent();
 	}
 }

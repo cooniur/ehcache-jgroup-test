@@ -54,11 +54,8 @@ public class DemoApplication {
 
 	@Configuration
 	static class CustomHibernateJpaConfiguration extends HibernateJpaAutoConfiguration {
-
 		@Override
 		protected void customizeVendorProperties(Map<String, Object> vendorProperties) {
-			//			vendorProperties.put("hibernate.cache.region.factory_class", SingletonRedisRegionFactory.class.getName());
-			//			vendorProperties.put("hibernate.cache.provider_configuration_file_resource_path", "hibernate-redis.properties");
 			vendorProperties.put("hibernate.cache.region.factory_class", EhCacheRegionFactory.class.getName());
 			super.customizeVendorProperties(vendorProperties);
 		}

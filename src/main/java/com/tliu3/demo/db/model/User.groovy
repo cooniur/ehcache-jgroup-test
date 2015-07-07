@@ -10,6 +10,8 @@ import javax.persistence.Table
 
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
+import org.hibernate.annotations.Fetch
+import org.hibernate.annotations.FetchMode
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 
@@ -30,5 +32,6 @@ public class User extends BaseEntity {
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "user_book_subscription", joinColumns = [@JoinColumn(name = "user_id", referencedColumnName = "id")],
 			inverseJoinColumns = [@JoinColumn(name = "book_id", referencedColumnName = "id")])
+	@Fetch(FetchMode.SELECT)
 	Set<Book> books = new HashSet<>()
 }

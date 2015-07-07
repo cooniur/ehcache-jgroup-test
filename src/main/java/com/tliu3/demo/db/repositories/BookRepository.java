@@ -13,7 +13,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
 	Optional<Book> findByName(String name);
 
-	default boolean existsByName(String name) {
+	default boolean exists(String name) {
 		return this.findByName(name).isPresent();
 	}
 }

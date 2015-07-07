@@ -7,7 +7,8 @@ import org.springframework.transaction.annotation.Transactional
 import com.tliu3.demo.db.model.Book
 import com.tliu3.demo.db.repositories.BookRepository
 import com.tliu3.demo.db.repositories.UserRepository
-import com.tliu3.demo.exceptions.NotFoundException
+import com.tliu3.demo.exceptions.BookNotFoundException
+import com.tliu3.demo.exceptions.UserNotFoundException
 
 @Service
 public class SubscriptionService {
@@ -22,8 +23,8 @@ public class SubscriptionService {
 
 	@Transactional
 	public Set<Book> subscribe(Long userId, Long bookId) {
-		def book = bookRepo.findById(bookId).orElseThrow({ new NotFoundException("Book [$bookId] not found.") })
-		def user = userRepo.findById(userId).orElseThrow({ new NotFoundException("User [$userId] not found.") })
+		def book = bookRepo.findById(bookId).orElseThrow({ new BookNotFoundException(bookId) })
+		def user = userRepo.findById(userId).orElseThrow({ new UserNotFoundException(userId) })
 		user.books.add(book)
 		user = userRepo.save(user)
 		return user.books
@@ -31,8 +32,8 @@ public class SubscriptionService {
 
 	@Transactional
 	public Set<Book> unsubscribe(Long userId, Long bookId) {
-		def book = bookRepo.findById(bookId).orElseThrow({ new NotFoundException("Book [$bookId] not found.") })
-		def user = userRepo.findById(userId).orElseThrow({ new NotFoundException("User [$userId] not found.") })
+		def book = bookRepo.findById(bookId).orElseThrow({ new BookNotFoundException(bookId) })
+		def user = userRepo.findById(userId).orElseThrow({ new UserNotFoundException(userId) })
 		user.books.remove(book)
 		user = userRepo.save(user)
 		return user.books
@@ -40,7 +41,7 @@ public class SubscriptionService {
 
 	@Transactional(readOnly = true)
 	public Set<Book> findAllSubscribedBooks(Long userId) {
-		def user = userRepo.findById(userId).orElseThrow({ new NotFoundException("User [$userId] not found.") })
+		def user = userRepo.findById(userId).orElseThrow({ new UserNotFoundException(userId) })
 		return user.books
 	}
 }

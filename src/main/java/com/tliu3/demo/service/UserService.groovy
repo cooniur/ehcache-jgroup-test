@@ -6,8 +6,8 @@ import org.springframework.transaction.annotation.Transactional
 
 import com.tliu3.demo.db.model.User
 import com.tliu3.demo.db.repositories.UserRepository
-import com.tliu3.demo.exceptions.ConflictException
-import com.tliu3.demo.exceptions.NotFoundException
+import com.tliu3.demo.exceptions.UserNameConflictException
+import com.tliu3.demo.exceptions.UserNotFoundException
 
 @Service
 public class UserService {
@@ -26,8 +26,8 @@ public class UserService {
 	@Transactional
 	public User create(Map userDTO) {
 		String name = userDTO.name
-		if (userRepo.existsByName(name)) {
-			throw new ConflictException("User [$name] already exists.")
+		if (userRepo.exists(name)) {
+			throw new UserNameConflictException(name)
 		}
 
 		def u = new User(name: userDTO.name,
@@ -38,12 +38,12 @@ public class UserService {
 
 	@Transactional(readOnly = true)
 	public User findOne(Long userId) {
-		return userRepo.findById(userId).orElseThrow({ new NotFoundException("User [$userId] not found.") })
+		return userRepo.findById(userId).orElseThrow({ new UserNotFoundException(userId) })
 	}
 
 	@Transactional
 	public User update(Long userId, Map userDTO) {
-		def user = userRepo.findById(userId).orElseThrow({ new NotFoundException("User [$userId] not found.") })
+		def user = userRepo.findById(userId).orElseThrow({ new UserNotFoundException(userId) })
 		user.sex = userDTO.sex
 		user.age = userDTO.age
 		return userRepo.save(user)

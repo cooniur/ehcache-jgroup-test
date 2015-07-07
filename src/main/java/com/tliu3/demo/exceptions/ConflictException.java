@@ -4,10 +4,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.CONFLICT)
-public class ConflictException extends RuntimeException {
+public abstract class ConflictException extends RuntimeException {
 	private static final long serialVersionUID = -8550773805565703176L;
 
-	public ConflictException(String message) {
+	protected ConflictException(String message) {
 		super(message);
 	}
 }
