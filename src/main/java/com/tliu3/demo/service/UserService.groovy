@@ -48,4 +48,10 @@ public class UserService {
 		user.age = userDTO.age
 		return userRepo.save(user)
 	}
+
+	@Transactional
+	public User increaseAge(Long userId) {
+		userRepo.increaseAge(userId)
+		return userRepo.findById(userId).orElseThrow({ new UserNotFoundException(userId) })
+	}
 }

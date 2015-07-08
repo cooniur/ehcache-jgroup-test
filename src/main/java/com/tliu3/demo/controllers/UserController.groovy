@@ -47,4 +47,10 @@ class UserController {
 		def user = userService.update(userId, userDTO)
 		return ok(user)
 	}
+
+	@RequestMapping(value = "/{userId}", method = PATCH, consumes = APPLICATION_JSON_VALUE)
+	public ResponseEntity increase(@PathVariable Long userId) {
+		def u = userService.increaseAge(userId);
+		return ok(u)
+	}
 }
