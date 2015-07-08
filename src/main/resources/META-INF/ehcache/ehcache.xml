@@ -29,9 +29,8 @@
 		   overflowToDisk="false">
 		<cacheEventListenerFactory
 				class="net.sf.ehcache.distribution.jgroups.JGroupsCacheReplicatorFactory"
-				properties="replicateAsynchronously=true, replicatePuts=true,
-    					  	replicateUpdates=true, replicateUpdatesViaCopy=false,
-      						replicateRemovals=true" />
+				properties="replicatePuts=true, replicateUpdates=true, replicateUpdatesViaCopy=false, replicateRemovals=true,
+	 						replicateAsynchronously=true, asynchronousReplicationIntervalMillis=500" />
 	</cache>
 
 	<defaultCache
@@ -42,11 +41,6 @@
 			eternal="false"
 			memoryStoreEvictionPolicy="LFU"
 			overflowToDisk="false">
-		<cacheEventListenerFactory
-				class="net.sf.ehcache.distribution.jgroups.JGroupsCacheReplicatorFactory"
-				properties="replicateAsynchronously=true, replicatePuts=true,
-    					  	replicateUpdates=true, replicateUpdatesViaCopy=false,
-      						replicateRemovals=true" />
 	</defaultCache>
 
 	<cache name="com.tliu3.demo.db.model.Book"
@@ -57,10 +51,6 @@
 		   statistics="true"
 		   memoryStoreEvictionPolicy="LFU"
 		   overflowToDisk="false">
-		<cacheEventListenerFactory
-				class="net.sf.ehcache.distribution.jgroups.JGroupsCacheReplicatorFactory"
-				properties="replicatePuts=true, replicateUpdates=true, replicateUpdatesViaCopy=true, replicateRemovals=true,
-	 						replicateAsynchronously=true, asynchronousReplicationIntervalMillis=500" />
 	</cache>
 
 	<cache name="com.tliu3.demo.db.model.User"
@@ -71,10 +61,6 @@
 		   statistics="true"
 		   memoryStoreEvictionPolicy="LFU"
 		   overflowToDisk="false">
-		<cacheEventListenerFactory
-				class="net.sf.ehcache.distribution.jgroups.JGroupsCacheReplicatorFactory"
-				properties="replicatePuts=true, replicateUpdates=true, replicateUpdatesViaCopy=true, replicateRemovals=true,
-	 						replicateAsynchronously=true, asynchronousReplicationIntervalMillis=500" />
 	</cache>
 
 	<!-- <cache name="com.xyz.db.model.EntityName" -->

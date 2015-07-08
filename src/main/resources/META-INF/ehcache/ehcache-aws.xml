@@ -6,7 +6,7 @@
 	<cacheManagerPeerProviderFactory
 			class="net.sf.ehcache.distribution.jgroups.JGroupsCacheManagerPeerProviderFactory"
 			properties="connect=TCP(bind_port=7800):
-					   	com.meltmedia.jgroups.aws.AWS_PING(timeout=3000;port_number=7800;tags=Environment,Role;log_aws_error_messages=true):
+					   	com.meltmedia.jgroups.aws.AWS_PING(timeout=3000;port_number=7800;tags=Environment,Role;log_aws_error_messages=true;credentials_provider_class=com.amazonaws.auth.DefaultAWSCredentialsProviderChain):
 					   	MERGE2(min_interval=10000;max_interval=30000):
 					   	FD_SOCK:
 					   	FD(timeout=3000;max_tries=3):
@@ -38,9 +38,8 @@
 		   overflowToDisk="false">
 		<cacheEventListenerFactory
 				class="net.sf.ehcache.distribution.jgroups.JGroupsCacheReplicatorFactory"
-				properties="replicateAsynchronously=true, replicatePuts=true,
-    					  	replicateUpdates=true, replicateUpdatesViaCopy=false,
-      						replicateRemovals=true" />
+				properties="replicatePuts=true, replicateUpdates=true, replicateUpdatesViaCopy=false, replicateRemovals=true,
+	 						replicateAsynchronously=true, asynchronousReplicationIntervalMillis=500" />
 	</cache>
 
 	<defaultCache
@@ -51,11 +50,6 @@
 			eternal="false"
 			memoryStoreEvictionPolicy="LFU"
 			overflowToDisk="false">
-		<cacheEventListenerFactory
-				class="net.sf.ehcache.distribution.jgroups.JGroupsCacheReplicatorFactory"
-				properties="replicateAsynchronously=true, replicatePuts=true,
-    					  	replicateUpdates=true, replicateUpdatesViaCopy=false,
-      						replicateRemovals=true" />
 	</defaultCache>
 
 	<cache name="com.tliu3.demo.db.model.Book"
@@ -66,10 +60,6 @@
 		   statistics="true"
 		   memoryStoreEvictionPolicy="LFU"
 		   overflowToDisk="false">
-		<cacheEventListenerFactory
-				class="net.sf.ehcache.distribution.jgroups.JGroupsCacheReplicatorFactory"
-				properties="replicatePuts=true, replicateUpdates=true, replicateUpdatesViaCopy=true, replicateRemovals=true,
-	 						replicateAsynchronously=true, asynchronousReplicationIntervalMillis=500" />
 	</cache>
 
 	<cache name="com.tliu3.demo.db.model.User"
@@ -80,10 +70,6 @@
 		   statistics="true"
 		   memoryStoreEvictionPolicy="LFU"
 		   overflowToDisk="false">
-		<cacheEventListenerFactory
-				class="net.sf.ehcache.distribution.jgroups.JGroupsCacheReplicatorFactory"
-				properties="replicatePuts=true, replicateUpdates=true, replicateUpdatesViaCopy=true, replicateRemovals=true,
-	 						replicateAsynchronously=true, asynchronousReplicationIntervalMillis=500" />
 	</cache>
 
 	<!-- <cache name="com.xyz.db.model.EntityName" -->
